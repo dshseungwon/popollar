@@ -22,7 +22,8 @@ import { withFirebase } from "../Firebase";
 const INITIAL_STATE = {
   email: "",
   password: "",
-  error: ""
+  error: "",
+  orgUser: false,
 };
 
 class SignInDialog extends React.Component {
@@ -118,8 +119,8 @@ class SignInDialog extends React.Component {
                 </Typography>
           
                 <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
+                  control={<Checkbox value="orgUser" color="primary" onChange={this.handleChange} />}
+                  label="Organizational"
                 />
                 <Button
                   onClick={this.handleSignUp}

@@ -43,7 +43,7 @@
     "url": "git+https://github.com/dshseungwon/popollar"
   },
   "keywords": [],
-  "author": "Seungwon Ju & Suhyun Lee",
+  "author": "Seungwon Ju",
   "license": "MIT",
   "optionalDependencies": {
     "babel-eslint": "7.2.3",
