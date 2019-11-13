@@ -54,9 +54,6 @@ const newCommitDialogStyle = theme => ({
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit
   },
-  writing: {
-    // marginBottom: theme.spacing.unit * 2,
-  },
   branchName: {
     
   },

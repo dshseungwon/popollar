@@ -111,6 +111,7 @@ class WorkInfo extends React.Component {
   };
 
   onComplete =(survey, options) => {
+    console.log("hello~");
     console.log(survey.data);
   };
   
@@ -216,7 +217,7 @@ class WorkInfo extends React.Component {
       console.log("info.type: ", info.type);
       bigContent = (
         <div align="left" style={{margin: "5%", color: "black"}}>
-          <Survey.Survey model={model} />
+          <Survey.Survey model={model} formCss={this.formCss} onComplete={this.onComplete} />
         </div>
       );
     // }

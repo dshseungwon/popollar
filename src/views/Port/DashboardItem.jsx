@@ -90,7 +90,7 @@ class DashboardItem extends Component {
                 <Divider />
                 <div style={{fontSize: "11px"}} className={classes.cardCategory}>{info.comments.length} Comments, {info.like} Likes </div>
               </CardBody>
-              <Button style={{fontSize: 10, color: "#5b5b5b"}} onClick={this.openDialog}>Commit</Button>
+              <Button style={{fontSize: 10, color: "#5b5b5b"}} onClick={this.openDialog}>RESULT</Button>
             </Card>
             
           </GridItem>
