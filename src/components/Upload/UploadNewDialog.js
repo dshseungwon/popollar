@@ -305,57 +305,57 @@ class UploadNewDialog extends React.Component {
               </Typography>
 
               <Grid container>
-                <Grid item xs={12} sm={2}>
+                <Grid item xs={12} sm={3}>
                   <Chip avatar={<Avatar><WritingIcon /></Avatar>}
                     variant={(this.state.type === "Writing") ? "default" : "outlined"}
                     color="primary"
                     className={classes.type}
-                    label="글"
+                    label="Study"
                     onClick={()=>this.setState({type: "Writing"})}/>
                 </Grid>
-                <Grid item xs={12} sm={2}>
+                <Grid item xs={12} sm={3}>
                   <Chip
-                    avatar={<Avatar><DrawingIcon /></Avatar>}
+                    avatar={<Avatar><MusicIcon /></Avatar>}
                     variant={(this.state.type === "Drawing") ? "default" : "outlined"}
                     color="primary"
                     className={classes.type}
-                    label="그림"
+                    label="Event"
                     onClick={()=>this.setState({type: "Drawing"})}/>
                 </Grid>
-                <Grid item xs={12} sm={2}>
+                <Grid item xs={12} sm={3}>
                   <Chip
                     avatar={<Avatar><PhotoIcon /></Avatar>}
                     variant={(this.state.type === "Photo") ? "default" : "outlined"}
                     color="primary"
                     className={classes.type}
-                    label="사진"
+                    label="Research"
                     onClick={()=>this.setState({type: "Photo"})}/>
                 </Grid>
-                <Grid item xs={12} sm={2}>
+                {/* <Grid item xs={12} sm={3}>
                 <Chip
                   avatar={<Avatar><DesignIcon /></Avatar>}
                   variant={(this.state.type === "Design") ? "default" : "outlined"}
                   color="primary"
                   className={classes.type}
-                  label="디자인"
+                  label="Design"
                   onClick={()=>this.setState({type: "Design"})}/>
-                </Grid>
-                <Grid item xs={12} sm={2}>
+                </Grid> */}
+                {/* <Grid item xs={12} sm={2}>
                   <Chip
                     avatar={<Avatar><MusicIcon /></Avatar>} 
                     variant={(this.state.type === "Music") ? "default" : "outlined"}
                     color="primary"
                     className={classes.type}
-                    label="음악"
+                    label="Product"
                     onClick={()=>this.setState({type: "Music"})}/>
-                </Grid>
-                <Grid item xs={12} sm={2}>
+                </Grid> */}
+                <Grid item xs={12} sm={3}>
                   <Chip
                     avatar={<Avatar><AttachIcon /></Avatar>}
                     variant={(this.state.type === "Attach") ? "default" : "outlined"}
                     color="primary"
                     className={classes.type}
-                    label="기타"
+                    label="Etc"
                     onClick={()=>this.setState({type: "Attach"})}/>
                 </Grid>
                
@@ -364,7 +364,7 @@ class UploadNewDialog extends React.Component {
 
             <Divider className={classes.divider}/>
 
-            {this.state.type === "Writing" ?
+            {/* {this.state.type === "Writing" ? */}
               <TextField
               name="writing"
               id="textfield-literature"
@@ -377,9 +377,10 @@ class UploadNewDialog extends React.Component {
               className={classes.writing}
               margin="normal"
               variant="outlined"
-            /> :
+            /> 
+            {/* :
               <UploadDropzone onNewFile={this.handleNewFile}/>
-            }
+            } */}
             
             
             <Divider className={classes.divider}/>
@@ -398,7 +399,7 @@ class UploadNewDialog extends React.Component {
                 variant="outlined"
               />
               
-              <TextField
+              {/* <TextField
                 name="commitMessage"
                 id="textfield-commit-message"
                 label="Commit Message"
@@ -409,7 +410,7 @@ class UploadNewDialog extends React.Component {
                 className={classes.commitMessage}
                 margin="normal"
                 variant="outlined"
-              />
+              /> */}
             </div>
           </main>
         </DialogContent>

@@ -70,7 +70,8 @@ class DashboardItem extends Component {
               <CardBody>
                 <img src={this.state.url} width="100%" alt="" />
                 <div style={{fontSize: "20px", marginTop: "2%"}}>{info.name}</div>
-                <div style={{marginBottom: "2%"}} className={classes.cardCategory}>{info.commitMessage}</div>
+                {info.files[0]} {/* //File content (JSON Poll string) */}
+                <div style={{marginBottom: "2%"}} className={classes.cardCategory}>{info.description}</div>
                 <Divider />
                 <div style={{fontSize: "11px"}} className={classes.cardCategory}>{info.comments.length} Comments, {info.like} Likes </div>
               </CardBody>

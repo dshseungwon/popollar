@@ -10,6 +10,8 @@ import ThumbUp from "@material-ui/icons/ThumbUp";
 import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
 
+import * as Survey from "survey-react";
+
 const styles = theme => ({
   layout: {
     width: "auto",
@@ -101,8 +103,23 @@ class WorkInfo extends React.Component {
     imageFiles: [],
     isLiked: false
   };
+  formCss = {
+    matrix: {
+        root: "table table-striped"
+    },
+    navigationButton: "button btn-lg"
+  };
+
+  onComplete =(survey, options) => {
+    console.log(survey.data);
+  };
+  
 
   componentDidMount() {
+    Survey
+    .StylesManager
+    .applyTheme("bootstrap");
+
     this.props.firebase.storage
       .refFromURL(this.props.info.thumbnail)
       .getDownloadURL()
@@ -118,28 +135,28 @@ class WorkInfo extends React.Component {
         console.log(error);
       });
 
-    if (
-      this.props.info.type === "Drawing" ||
-      this.props.info.type === "Photo" ||
-      this.props.info.type === "Design"
-    ) {
-      this.props.info.files.map(file => {
-        this.props.firebase.storage
-          .refFromURL(file)
-          .getDownloadURL()
-          .then(
-            function(url) {
-              let joined = this.state.imageFiles.concat(url);
-              this.setState({
-                imageFiles: joined
-              });
-            }.bind(this)
-          )
-          .catch(function(error) {
-            console.log(error);
-          });
-      });
-    }
+    // if (
+    //   this.props.info.type === "Drawing" ||
+    //   this.props.info.type === "Photo" ||
+    //   this.props.info.type === "Design"
+    // ) {
+    //   this.props.info.files.map(file => {
+    //     this.props.firebase.storage
+    //       .refFromURL(file)
+    //       .getDownloadURL()
+    //       .then(
+    //         function(url) {
+    //           let joined = this.state.imageFiles.concat(url);
+    //           this.setState({
+    //             imageFiles: joined
+    //           });
+    //         }.bind(this)
+    //       )
+    //       .catch(function(error) {
+    //         console.log(error);
+    //       });
+    //   });
+    // }
 
     this.listner = this.props.firebase.auth.onAuthStateChanged(authUser => {
       authUser
@@ -184,24 +201,25 @@ class WorkInfo extends React.Component {
     let i = 0;
     let likeChip;
     let bigContent = <div />;
-    if (
-      info.type === "Photo" ||
-      info.type === "Design" ||
-      info.type === "Drawing"
-    ) {
-      bigContent = this.state.imageFiles.map(file => (
-        <div align="center" key={i++}>
-          <img width="90%" src={file} alt={file} />
-        </div>
-      ));
-    } else if (info.type === "Writing") {
+    var model = new Survey.Model(info.files[0]);
+    // if (
+    //   info.type === "Photo" ||
+    //   info.type === "Design" ||
+    //   info.type === "Drawing"
+    // ) {
+    //   bigContent = this.state.imageFiles.map(file => (
+    //     <div align="center" key={i++}>
+    //       <img width="90%" src={file} alt={file} />
+    //     </div>
+    //   ));
+    // } else if (info.type === "Writing") {
       console.log("info.type: ", info.type);
       bigContent = (
         <div align="left" style={{margin: "5%", color: "black"}}>
-          {info.files[0]}
+          <Survey.Survey model={model} />
         </div>
       );
-    }
+    // }
 
     if (this.state.authUser !== null) {
       if (this.state.isLiked === false) {
@@ -212,7 +230,7 @@ class WorkInfo extends React.Component {
                 <ThumbUp />
               </Avatar>
             }
-            label="Like this Work!"
+            label="Like this Poll!"
             className={classes.chip}
             onClick={this.handleLikeClick}
             color="primary"
@@ -262,10 +280,10 @@ class WorkInfo extends React.Component {
             </h3>
             {bigContent}
             <React.Fragment>
-              <div className={classes.description_head} style={{marginBottom: "0px"}}>
-                {info.commitMessage}
+              <div className={classes.description_head} style={{marginBottom: "2%"}}>
+                {info.description}
               </div>
-              <div className={classes.description_body} style={{marginTop: "2%"}}>{info.description}</div>
+              {/* <div className={classes.description_body} style={{marginTop: "2%"}}>{info.description}</div> */}
             </React.Fragment>
             <Divider />
             <div align="right" style={{ marginRight: "5%", marginTop: "2%" }}>

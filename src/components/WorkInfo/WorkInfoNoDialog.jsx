@@ -207,7 +207,7 @@ class WorkInfoNoDialog extends React.Component {
                 <ThumbUp />
               </Avatar>
             }
-            label="Like this Work!"
+            label="Like this Poll!"
             className={classes.chip}
             onClick={this.handleLikeClick}
             color="primary"
