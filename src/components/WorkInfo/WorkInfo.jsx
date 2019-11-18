@@ -101,7 +101,8 @@ class WorkInfo extends React.Component {
   state = {
     url: "",
     imageFiles: [],
-    isLiked: false
+    isLiked: false,
+    isAnswered: false
   };
   formCss = {
     matrix: {
@@ -113,6 +114,18 @@ class WorkInfo extends React.Component {
   onComplete =(survey, options) => {
     console.log("hello~");
     console.log(survey.data);
+
+    // upload it to DB
+    const ansUser = this.props.info.answeredUsers;
+    ansUser.push(this.state.authUser.email);
+    const list = this.props.info.answers;
+    list.push(survey.data);
+    const ansRef = this.props.firebase.db.collection("works").doc(this.props.info.id);
+    return ansRef.update({
+      answers: list,
+      answeredUsers: ansUser
+    });
+    console.log("uploaded into db");
   };
   
 
@@ -167,6 +180,12 @@ class WorkInfo extends React.Component {
               this.setState({
                 isLiked: true
               });
+            }
+            let ansList = this.props.info.answeredUsers;
+            if (ansList.indexOf(this.state.authUser.email) !== -1) {
+                this.setState({
+                    isAnswered: true
+                });
             }
           })
         : this.setState({ authUser: null });

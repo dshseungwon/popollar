@@ -101,7 +101,7 @@ class UploadNewDialog extends React.Component {
       this.state.title === '' ||
       this.state.type === '' ||
       this.state.description === '';
-    
+
     if(isInvalid) {
       alert("모든 필드에 정보를 입력해 주세요");
       return;
@@ -135,6 +135,8 @@ class UploadNewDialog extends React.Component {
           ownerName: this.state.email,
           date: (new Date()).getTime(),
           files: [this.state.writing],
+          answeredUsers: [],
+          answers: [],
         })
         .then(()=>{
           console.log('Work add success!');
@@ -182,7 +184,7 @@ class UploadNewDialog extends React.Component {
     //           .catch((error) => Promise.reject(error));
     //       }))
     //     };
-      
+
     //   storageRef.putFiles(this.state.fileArray)
     //     .then((downloadUrls) => {
     //       workRef.add({})
@@ -227,7 +229,7 @@ class UploadNewDialog extends React.Component {
     //             .catch((error) => {
     //               console.log(error);
     //             });
-                
+
     //           })
     //           .catch((error)=>{
     //             console.log(error);
@@ -281,14 +283,14 @@ class UploadNewDialog extends React.Component {
                 />
                 </Grid>
                 <Grid item xs={4}>
-                <Button 
+                <Button
                   variant="contained"
                   color="secondary"
                   className={classes.uploadButton}
                   onClick={this.handleUpload}
                   >
                   Upload
-                  {this.state.uploading ? 
+                  {this.state.uploading ?
                     <CircularProgress size={24} className={classes.progress} /> :
                     <CloudUploadIcon className={classes.uploadButtonIcon} />}
                 </Button>
@@ -341,7 +343,7 @@ class UploadNewDialog extends React.Component {
                 </Grid> */}
                 {/* <Grid item xs={12} sm={2}>
                   <Chip
-                    avatar={<Avatar><MusicIcon /></Avatar>} 
+                    avatar={<Avatar><MusicIcon /></Avatar>}
                     variant={(this.state.type === "Music") ? "default" : "outlined"}
                     color="primary"
                     className={classes.type}
@@ -357,7 +359,7 @@ class UploadNewDialog extends React.Component {
                     label="Etc"
                     onClick={()=>this.setState({type: "Etc"})}/>
                 </Grid>
-               
+
               </Grid>
             </div>
 
@@ -376,12 +378,12 @@ class UploadNewDialog extends React.Component {
               className={classes.writing}
               margin="normal"
               variant="outlined"
-            /> 
+            />
             {/* :
               <UploadDropzone onNewFile={this.handleNewFile}/>
             } */}
-            
-            
+
+
             <Divider className={classes.divider}/>
 
             <div>
@@ -397,7 +399,7 @@ class UploadNewDialog extends React.Component {
                 margin="normal"
                 variant="outlined"
               />
-              
+
               {/* <TextField
                 name="commitMessage"
                 id="textfield-commit-message"
