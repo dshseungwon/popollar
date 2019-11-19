@@ -116,16 +116,35 @@ class WorkInfo extends React.Component {
     console.log(survey.data);
 
     // upload it to DB
-    const ansUser = this.props.info.answeredUsers;
-    ansUser.push(this.state.authUser.email);
-    const list = this.props.info.answers;
-    list.push(survey.data);
-    const ansRef = this.props.firebase.db.collection("works").doc(this.props.info.id);
-    return ansRef.update({
-      answers: list,
-      answeredUsers: ansUser
-    });
-    console.log("uploaded into db");
+    if (this.state.authUser === false) {
+      // User does not logged in
+      alert("Please try again after logging in");
+    }
+    else {
+        let ansList = this.props.info.answeredUsers;
+        if (ansList.indexOf(this.state.authUser.email) !== -1) {
+            // This User already sended their answer.
+            alert("You have already submitted answers");
+            // Need to Change this part to update their answers
+            // Or Display 'Already Answered Survey'
+        }
+        else {
+            // First answering by this user
+            this.setState({
+              isAnswered: true
+            });
+            const ansUser = this.props.info.answeredUsers;
+            ansUser.push(this.state.authUser.email);
+            const list = this.props.info.answers;
+            list.push(survey.data);
+            const ansRef = this.props.firebase.db.collection("works").doc(this.props.info.id);
+            return ansRef.update({
+              answers: list,
+              answeredUsers: ansUser
+            });
+            console.log("uploaded into db");
+        }
+    }
   };
   
 
