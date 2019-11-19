@@ -12,7 +12,6 @@ import SignInDialog from '../User/SignInDialog';
 
 import { withFirebase } from '../Firebase';
 
-
 const INITIAL_STATE = {
   open: false,
   error: null,

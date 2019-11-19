@@ -173,80 +173,6 @@ class UploadNewDialog extends React.Component {
         console.log(error);
       });
     }
-    // else {
-    //   // Else
-    //   storageRef.constructor.prototype.putFiles = (files) => {
-    //       return Promise.all(files.map((file) => {
-    //         return storageRef
-    //           .child(file.name)
-    //           .put(file)
-    //           .then((snapshot) => snapshot.ref.getDownloadURL())
-    //           .catch((error) => Promise.reject(error));
-    //       }))
-    //     };
-
-    //   storageRef.putFiles(this.state.fileArray)
-    //     .then((downloadUrls) => {
-    //       workRef.add({})
-    //       .then((docRef) => {
-    //         docRef.set({
-    //           name: this.state.title,
-    //           description: this.state.description,
-    //           branchName: "master",
-    //           parent: [{master: docRef.id}],
-    //           thumbnail: downloadUrls[0],
-    //           type: this.state.type,
-    //           like: 0,
-    //           isRecent: true,
-    //           commitMessage: this.state.commitMessage,
-    //           comments: [],
-    //           forkedUsers: [],
-    //           likedUsers: [],
-    //           owner: this.state.authUser.uid,
-    //           ownerName: this.state.email,
-    //           date: (new Date()).getTime(),
-    //           files: downloadUrls,
-    //         })
-
-    //         .then(()=>{
-    //           console.log('Work add success!');
-    //           userRef.update({
-    //             collections: this.props.firebase.FieldValue.arrayUnion(docRef.id)
-    //           })
-    //           .then(()=>{
-    //             console.log('User collection update success!');
-
-    //             treeRef.add({
-    //               id: docRef.id,
-    //               branch: 'master',
-    //               children: []
-    //             })
-    //             .then(() => {
-    //               console.log("Tree collection add success!");
-    //               this.handleClose();
-    //               window.location.reload();
-    //             })
-    //             .catch((error) => {
-    //               console.log(error);
-    //             });
-
-    //           })
-    //           .catch((error)=>{
-    //             console.log(error);
-    //           })
-    //         })
-    //         .catch((error)=>{
-    //           console.log(error);
-    //         })
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //       })
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // }
   }
 
   handleNewFile = (acceptedFiles) => {
@@ -399,19 +325,6 @@ class UploadNewDialog extends React.Component {
                 margin="normal"
                 variant="outlined"
               />
-
-              {/* <TextField
-                name="commitMessage"
-                id="textfield-commit-message"
-                label="Commit Message"
-                placeholder="First Commit"
-                multiline
-                fullWidth
-                onChange={this.handleChange}
-                className={classes.commitMessage}
-                margin="normal"
-                variant="outlined"
-              /> */}
             </div>
           </main>
         </DialogContent>
