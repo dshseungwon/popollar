@@ -24,6 +24,8 @@ const INITIAL_STATE = {
   password: "",
   error: "",
   orgUser: false,
+  singing_in: false,
+  singing_up: false,
 };
 
 class SignInDialog extends React.Component {
@@ -69,15 +71,18 @@ class SignInDialog extends React.Component {
     e.preventDefault();
 
     const { email, password } = this.state;
+    this.setState({singing_in: true});
 
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(authUser => {
         this.handleClose();
+        this.setState({singing_in: false});
       })
       .catch(error => {
         console.log(error);
         this.setState({ error });
+        this.setState({singing_in: false});
       })
 
       
