@@ -22,6 +22,9 @@ import { withFirebase } from "../Firebase";
 const INITIAL_STATE = {
   email: "",
   password: "",
+  gender: "",
+  age: 0,
+  govID: 0,
   error: "",
   orgUser: false,
   singing_in: false,
@@ -51,13 +54,13 @@ class SignInDialog extends React.Component {
   handleSignUp = (e) => {
     e.preventDefault();
 
-    const { email, password } = this.state;
+    const { email, password, gender, age, govID } = this.state;
     
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
         this.props.firebase
-          .doRecordUser(authUser, email, password);
+          .doRecordUser(authUser, email, password, gender, age, govID);
         this.handleClose();
       })
       .catch(error => {
@@ -118,14 +121,26 @@ class SignInDialog extends React.Component {
                   <InputLabel htmlFor="password">Password</InputLabel>
                   <Input onChange={this.handleChange} name="password" type="password" id="password" autoComplete="current-password" />
                 </FormControl>
-
+                <FormControl margin="normal" fullWidth>
+                  <InputLabel htmlFor="age">Age</InputLabel>
+                  <Input onChange={this.handleChange} id="age" name="age" autoComplete="age" />
+                </FormControl>
+                <FormControl margin="normal" fullWidth>
+                  <InputLabel htmlFor="gender">Gender</InputLabel>
+                  <Input onChange={this.handleChange} id="gender" name="gender" autoComplete="gender" />
+                </FormControl>
+                <FormControl margin="normal" fullWidth>
+                  <InputLabel htmlFor="govID">Government ID</InputLabel>
+                  <Input onChange={this.handleChange} id="govID" name="govID" autoComplete="govID" />
+                </FormControl>
+                
                 <Typography component="h1" color="error">
                   {this.state.error ? this.state.error.message : "" }
                 </Typography>
           
                 <FormControlLabel
                   control={<Checkbox value="orgUser" color="primary" onChange={this.handleChange} />}
-                  label="Organizational"
+                  label="Organizational User"
                 />
                 <Button
                   onClick={this.handleSignUp}
