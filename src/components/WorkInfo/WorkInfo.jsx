@@ -251,14 +251,13 @@ class WorkInfo extends React.Component {
     //       <img width="90%" src={file} alt={file} />
     //     </div>
     //   ));
-    // } else if (info.type === "Writing") {
+    // }
       console.log("info.type: ", info.type);
       bigContent = (
         <div align="left" style={{margin: "5%", color: "black"}}>
           <Survey.Survey model={model} formCss={this.formCss} onComplete={this.onComplete} />
         </div>
       );
-    // }
 
     if (this.state.authUser !== null) {
       if (this.state.isLiked === false) {

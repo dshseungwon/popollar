@@ -1,11 +1,6 @@
 import React from 'react';
 
 import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Input from '@material-ui/core/Input';
-import Paper from '@material-ui/core/Paper';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -23,9 +18,7 @@ import Avatar from '@material-ui/core/Avatar';
 import TitleIcon from '@material-ui/icons/BubbleChart';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import WritingIcon from '@material-ui/icons/Create';
-import DrawingIcon from '@material-ui/icons/Brush';
 import PhotoIcon from '@material-ui/icons/PhotoCamera';
-import DesignIcon from '@material-ui/icons/Layers';
 import MusicIcon from '@material-ui/icons/MusicNote';
 import AttachIcon from '@material-ui/icons/AttachFile';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -35,7 +28,6 @@ import UploadDropzone from "./UploadDropzone";
 
 import { withFirebase } from "../Firebase";
 import { DialogContent, Divider } from '@material-ui/core';
-import { rejects } from 'assert';
 
 const INITIAL_STATE = {
   title: "",
@@ -45,7 +37,7 @@ const INITIAL_STATE = {
   fileArray: [],
   uploading: false,
   email: "",
-  writing: "",
+  poll_json: "",
 };
 
 class UploadNewDialog extends React.Component {
@@ -111,10 +103,9 @@ class UploadNewDialog extends React.Component {
 
     let userRef = this.props.firebase.user(this.state.authUser.uid);
     let workRef = this.props.firebase.db.collection('works');
-    let storageRef = this.props.firebase.storage.ref();
+    // let storageRef = this.props.firebase.storage.ref();
     let treeRef = this.props.firebase.db.collection('trees');
 
-      // Writing
       workRef.add({})
       .then((docRef) => {
         console.log('WordRef added');
@@ -257,24 +248,6 @@ class UploadNewDialog extends React.Component {
                     label="Research"
                     onClick={()=>this.setState({type: "Research"})}/>
                 </Grid>
-                {/* <Grid item xs={12} sm={3}>
-                <Chip
-                  avatar={<Avatar><DesignIcon /></Avatar>}
-                  variant={(this.state.type === "Design") ? "default" : "outlined"}
-                  color="primary"
-                  className={classes.type}
-                  label="Design"
-                  onClick={()=>this.setState({type: "Design"})}/>
-                </Grid> */}
-                {/* <Grid item xs={12} sm={2}>
-                  <Chip
-                    avatar={<Avatar><MusicIcon /></Avatar>}
-                    variant={(this.state.type === "Music") ? "default" : "outlined"}
-                    color="primary"
-                    className={classes.type}
-                    label="Product"
-                    onClick={()=>this.setState({type: "Music"})}/>
-                </Grid> */}
                 <Grid item xs={12} sm={3}>
                   <Chip
                     avatar={<Avatar><AttachIcon /></Avatar>}
@@ -289,8 +262,6 @@ class UploadNewDialog extends React.Component {
             </div>
 
             <Divider className={classes.divider}/>
-
-            {/* {this.state.type === "Writing" ? */}
               <TextField
               name="poll_json"
               id="textfield-literature"
