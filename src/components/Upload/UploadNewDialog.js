@@ -125,7 +125,7 @@ class UploadNewDialog extends React.Component {
           owner: this.state.authUser.uid,
           ownerName: this.state.email,
           date: (new Date()).getTime(),
-          files: [this.state.writing],
+          files: [this.state.poll_json],
           answeredUsers: [],
           answers: [],
         })
