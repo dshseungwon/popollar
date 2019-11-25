@@ -12,6 +12,7 @@ import BlurOn from "@material-ui/icons/BlurOn";
 import Test from "views/Test/Test.jsx";
 import Portfolio from "../views/Port/Portfolio";
 import Discover from "../views/Discover/Discover";
+import Marketplace from "../views/Marketplace/Marketplace";
 
 const dashboardRoutes = [
 
@@ -28,6 +29,13 @@ const dashboardRoutes = [
     navbarName: "My Poll",
     icon: Person,
     component: Portfolio
+  },
+  {
+    path: "/marketplace",
+    sidebarName: "Marketplace",
+    navbarName: "Marketplace",
+    icon: BlurOn,
+    component: Marketplace
   },
   //   path: "/discover",
   //   sidebarName: "Discover",
