@@ -114,10 +114,10 @@ class UploadNewDialog extends React.Component {
     let storageRef = this.props.firebase.storage.ref();
     let treeRef = this.props.firebase.db.collection('trees');
 
-    if(this.state.type === "Writing") {
       // Writing
       workRef.add({})
       .then((docRef) => {
+        console.log('WordRef added');
         docRef.set({
           name: this.state.title,
           description: this.state.description,
@@ -172,7 +172,6 @@ class UploadNewDialog extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-    }
   }
 
   handleNewFile = (acceptedFiles) => {
