@@ -29,6 +29,8 @@ import UploadDropzone from "./UploadDropzone";
 import { withFirebase } from "../Firebase";
 import { DialogContent, Divider } from '@material-ui/core';
 
+import AddSurvey from "./AddSurvey";
+
 const INITIAL_STATE = {
   title: "",
   type: "",
@@ -260,6 +262,20 @@ class UploadNewDialog extends React.Component {
 
               </Grid>
             </div>
+
+            <Grid container>
+              <Grid item xs={12} sm={3}>
+                <Chip avatar={<Avatar><WritingIcon /></Avatar>}
+                  variant={(this.state.type === "AddSurvey") ? "default" : "outlined"}
+                  color="primary"
+                  className={classes.type}
+                  label="Add Survey"
+                  onClick={()=>this.setState({type: "AddSurvey"})}/>
+              </Grid>
+              <Grid item xs={4}>
+                <AddSurvey />
+              </Grid>
+            </Grid>
 
             <Divider className={classes.divider}/>
               <TextField
