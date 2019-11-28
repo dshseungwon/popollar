@@ -267,13 +267,21 @@ class UploadNewDialog extends React.Component {
   handleUpload = (e) => {
     console.log(this.state);
 
-    const isInvalid =
+    const isInvalid1 =
       this.state.title === '' ||
       this.state.type === '' ||
       this.state.description === '';
 
-    if(isInvalid) {
+    const isInvalid2 = 
+      json === '';
+
+    if(isInvalid1) {
       alert("모든 필드에 정보를 입력해 주세요");
+      return;
+    }
+
+    if(isInvalid2) {
+      alert("Text to JSON 버튼을 클릭해 주세요");
       return;
     }
 
