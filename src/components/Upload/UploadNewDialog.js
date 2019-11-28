@@ -146,7 +146,9 @@ class AddSurvey extends React.Component {
       newText += '\
         {\
          "type": "comment",\
-         "name": "' + this.state.textBox[ind].label + " " + this.state.textBox[ind].text + '",\
+         "name": "' + this.state.textBox[ind].label + '",\
+         "title": "' + this.state.textBox[ind].label + '",\
+         "description": "' + this.state.textBox[ind].text + '",\
          "value": "' + this.state.textBox[ind].text + '"\
         }\
       ';
