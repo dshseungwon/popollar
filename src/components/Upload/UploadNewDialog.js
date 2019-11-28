@@ -152,7 +152,7 @@ class AddSurvey extends React.Component {
         }\
       ';
       if(ind !== this.state.textBox.length - 1){
-        newText += ',\n';
+        newText += ',';
       }
     }
     const tempText = boardFront + commentBox + ',\n' + checkBox + boardBack;
