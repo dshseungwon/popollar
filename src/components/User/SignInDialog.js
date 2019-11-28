@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -14,15 +13,16 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Avatar from '@material-ui/core/Avatar';
 import Dialog from '@material-ui/core/Dialog';
 import PropTypes from 'prop-types';
-
 import dialogStyle from "assets/jss/material-dashboard-react/components/dialogStyle.js";
-
 import { withFirebase } from "../Firebase";
 
 const INITIAL_STATE = {
   email: "",
   password: "",
   error: "",
+  age: 0,
+  gender: "",
+  govID: 0,
   orgUser: false,
   singing_in: false,
   singing_up: false,
@@ -51,13 +51,14 @@ class SignInDialog extends React.Component {
   handleSignUp = (e) => {
     e.preventDefault();
 
-    const { email, password } = this.state;
+    const { email, password, age, gender, govID } = this.state;
     
     this.props.firebase
-      .doCreateUserWithEmailAndPassword(email, password)
+      .doCreateUserWithEmailAndPassword(email, password, age, gender, govID)
       .then(authUser => {
         this.props.firebase
-          .doRecordUser(authUser, email, password);
+          .doRecordUser(authUser, email, password, age, gender, govID);
+        this.authUser.setEmail("it@worked.yay");
         this.handleClose();
       })
       .catch(error => {
@@ -118,6 +119,18 @@ class SignInDialog extends React.Component {
                   <InputLabel htmlFor="password">Password</InputLabel>
                   <Input onChange={this.handleChange} name="password" type="password" id="password" autoComplete="current-password" />
                 </FormControl>
+                <FormControl margin="normal" fullWidth>
+                  <InputLabel htmlFor="age">Age</InputLabel>
+                  <Input onChange={this.handleChange} id="age" name="age" autoComplete="age" />
+                </FormControl>
+                <FormControl margin="normal" fullWidth>
+                  <InputLabel htmlFor="gender">Gender</InputLabel>
+                  <Input onChange={this.handleChange} id="gender" name="gender" autoComplete="gender" />
+                </FormControl>
+                <FormControl margin="normal" fullWidth>
+                  <InputLabel htmlFor="govID">Government ID</InputLabel>
+                  <Input onChange={this.handleChange} id="govID" name="govID" autoComplete="govID" />
+                </FormControl>                
 
                 <Typography component="h1" color="error">
                   {this.state.error ? this.state.error.message : "" }
