@@ -148,8 +148,7 @@ class AddSurvey extends React.Component {
          "type": "comment",\
          "name": "' + this.state.textBox[ind].label + '",\
          "title": "' + this.state.textBox[ind].label + '",\
-         "description": "' + this.state.textBox[ind].text + '",\
-         "value": "' + this.state.textBox[ind].text + '"\
+         "description": "' + this.state.textBox[ind].text + '"\
         }\
       ';
       if(ind !== this.state.textBox.length - 1){
