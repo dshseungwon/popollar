@@ -39,7 +39,7 @@ class AddSurvey extends React.Component {
 
     this.state = {
       textBox: [
-        {label: "Question1", placeholder: "Stop!!!!!!!!!!", text: "Hello"},
+        {label: "Question 1", placeholder: "Stop!!!!!!!!!!", text: "Hello"},
       ],
       text: '',
       Jtext: '',
