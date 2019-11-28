@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Typography from '@material-ui/core/Typography';
 
@@ -29,7 +30,182 @@ import UploadDropzone from "./UploadDropzone";
 import { withFirebase } from "../Firebase";
 import { DialogContent, Divider } from '@material-ui/core';
 
-import AddSurvey from "./AddSurvey";
+var json = '';
+
+class AddSurvey extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      textBox: [
+        {label: "Question1", placeholder: "Stop!!!!!!!!!!", text: "Hello"},
+      ],
+      text: '',
+      Jtext: '',
+    };
+
+    this.TextBoxChange = this.TextBoxChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAddText = this.handleAddText.bind(this);
+    this.handleDeleteText = this.handleDeleteText.bind(this);
+    this.handleChangeText = this.handleChangeText.bind(this);
+    this.handleChangeToJSON = this.handleChangeToJSON.bind(this);
+  }
+
+  TextBoxChange = (index, event) => {
+    if(event.target.value === ""){
+      return;
+    }
+    this.state.textBox[index].text = event.target.value;
+    
+    this.setState({
+      textBox: this.state.textBox
+    });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.onCreate(this.state);
+    this.setState({
+      text: '',
+    })
+  }
+
+  handleAddText = () => {
+    const newText = {
+      label: "Question " + (this.state.textBox.length + 1), 
+      placeholder: "Stop!!!!!!!!!!", 
+      text: this.state.text,
+    };
+
+    this.setState({
+      textBox: this.state.textBox.concat(newText)
+    });
+  }
+
+  handleDeleteText = (text, index) => {  
+    for(let i = index; i < this.state.textBox.length - 1; i++){
+      this.state.textBox[i] = this.state.textBox[i + 1];
+    };
+    this.state.textBox.splice(this.state.textBox.length - 1, 1);
+
+    this.setState({
+      textBox: this.state.textBox
+    });
+  }
+
+  handleChangeText = (text, index) => {
+    const newText = {
+      label: "Question " + (index + 1), 
+      placeholder: "Stop!!!!!!!!!!", 
+      text: this.state.text,
+    };
+    this.state.textBox[index] = newText;
+
+    this.setState({
+      textBox: this.state.textBox
+    });
+  }
+
+  handleChangeToJSON = () => {
+    const boardFront = '\
+      {\
+       "pages": [\
+        {\
+         "name": "page1",\
+         "elements": [\
+    ';
+    const boardBack = '\
+         ]\
+        }\
+       ]\
+      }\
+    ';
+    const commentBox = '\
+      {\
+       "type": "comment",\
+       "name": "name",\
+       "value": "value"\
+      }\
+    ';
+    const checkBox = '\
+      {\
+       "type": "checkbox",\
+       "name": "question3",\
+       "choices": [\
+        "item1",\
+        "item2",\
+        "item3"\
+       ]\
+      }\
+    ';
+    var newText = '';
+
+    for(let ind = 0; ind < this.state.textBox.length; ind++){
+      newText += '\
+        {\
+         "type": "comment",\
+         "name": "' + this.state.textBox[ind].label + " " + this.state.textBox[ind].text + '",\
+         "value": "' + this.state.textBox[ind].text + '"\
+        }\
+      ';
+      if(ind !== this.state.textBox.length - 1){
+        newText += ',\n';
+      }
+    }
+    const tempText = boardFront + commentBox + ',\n' + checkBox + boardBack;
+    this.state.Jtext = boardFront + newText + boardBack;;
+    this.setState({
+      Jtext: this.state.Jtext
+    });
+    json = this.state.Jtext;
+  }
+
+  render() {
+    return (
+      <div className="component-wrapper">
+        <button onClick={this.handleAddText} className="addTextButton">
+          addText
+        </button>
+        <ul>
+          {this.state.textBox.map(
+            (text, index) => {
+              return(<li key = {index}>
+                <TextField 
+                  id="filled-secondary"
+                  label={this.state.textBox[index].label}
+                  placeholder={this.state.textBox[index].placeholder}
+                  value={this.state.textBox[index].text}
+                  defaultValue={this.props.defaultValue}
+                  multiline
+                  fullWidth
+                  rows="8"
+                  onChange={this.TextBoxChange.bind(this, index)}
+                  margin="normal"
+                  variant="outlined">
+                </TextField> 
+                <button onClick={() => this.handleChangeText(text, index)} className="changeButton">
+                  modify
+                </button>
+                <button onClick={() => this.handleDeleteText(text, index)} className="deleteButton">
+                  delete
+                </button>
+              </li>)
+            }
+          )}
+        </ul> 
+        <ul>
+          <button onClick={this.handleChangeToJSON} className="JSONButton">
+            Text to JSON
+          </button>
+        </ul>
+      </div>
+
+    );
+  };
+}
+
 
 const INITIAL_STATE = {
   title: "",
@@ -39,7 +215,6 @@ const INITIAL_STATE = {
   fileArray: [],
   uploading: false,
   email: "",
-  poll_json: "",
 };
 
 class UploadNewDialog extends React.Component {
@@ -127,7 +302,7 @@ class UploadNewDialog extends React.Component {
           owner: this.state.authUser.uid,
           ownerName: this.state.email,
           date: (new Date()).getTime(),
-          files: [this.state.poll_json],
+          files: [json],
           answeredUsers: [],
           answers: [],
         })
@@ -264,33 +439,11 @@ class UploadNewDialog extends React.Component {
             </div>
 
             <Grid container>
-              <Grid item xs={12} sm={3}>
-                <Chip avatar={<Avatar><WritingIcon /></Avatar>}
-                  variant={(this.state.type === "AddSurvey") ? "default" : "outlined"}
-                  color="primary"
-                  className={classes.type}
-                  label="Add Survey"
-                  onClick={()=>this.setState({type: "AddSurvey"})}/>
-              </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={11}>
                 <AddSurvey />
               </Grid>
             </Grid>
 
-            <Divider className={classes.divider}/>
-              <TextField
-              name="poll_json"
-              id="textfield-literature"
-              label="POLL"
-              placeholder="Please Copy&Paste JSON string of a poll"
-              multiline
-              fullWidth
-              rows="8"
-              onChange={this.handleChange}
-              className={classes.writing}
-              margin="normal"
-              variant="outlined"
-            />
             {/* :
               <UploadDropzone onNewFile={this.handleNewFile}/>
             } */}
@@ -323,5 +476,10 @@ UploadNewDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func,
 };
+
+ReactDOM.render(
+  <AddSurvey />,
+  document.getElementById('root')
+);
 
 export default withFirebase(withStyles(uploadDialogStyle)(UploadNewDialog));

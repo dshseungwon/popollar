@@ -45,8 +45,6 @@ class AddSurvey extends React.Component {
     super(props);
 
     this.state = {
-      survey: ['example', 'time'],
-      query: '',
       textBox: [
         {label: "Question1", placeholder: "Stop!!!!!!!!!!", text: "Hello"},
       ],
@@ -163,8 +161,8 @@ class AddSurvey extends React.Component {
       newText += '\
         {\
          "type": "comment",\
-         "name": ' + this.state.textBox[ind].label + '\
-         "value": ' + this.state.textBox[ind].text + '\
+         "name": "' + this.state.textBox[ind].label + '",\
+         "value": "' + this.state.textBox[ind].text + '"\
         }\
       ';
       if(ind !== this.state.textBox.length - 1){
