@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
@@ -39,6 +40,184 @@ import { rejects } from 'assert';
 
 import AddSurvey from "./AddSurvey";
 
+var json = '';
+
+class AddSurvey extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      textBox: [
+        {label: "Question 1", placeholder: "Stop!!!!!!!!!!", text: "Hello"},
+      ],
+      text: '',
+      Jtext: '',
+    };
+
+    this.TextBoxChange = this.TextBoxChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAddText = this.handleAddText.bind(this);
+    this.handleDeleteText = this.handleDeleteText.bind(this);
+    this.handleChangeText = this.handleChangeText.bind(this);
+    this.handleChangeToJSON = this.handleChangeToJSON.bind(this);
+  }
+
+  TextBoxChange = (index, event) => {
+    if(event.target.value === ""){
+      return;
+    }
+    this.state.textBox[index].text = event.target.value;
+    
+    this.setState({
+      textBox: this.state.textBox
+    });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.onCreate(this.state);
+    this.setState({
+      text: '',
+    })
+  }
+
+  handleAddText = () => {
+    const newText = {
+      label: "Question " + (this.state.textBox.length + 1), 
+      placeholder: "Stop!!!!!!!!!!", 
+      text: this.state.text,
+    };
+
+    this.setState({
+      textBox: this.state.textBox.concat(newText)
+    });
+  }
+
+  handleDeleteText = (text, index) => {  
+    for(let i = index; i < this.state.textBox.length - 1; i++){
+      this.state.textBox[i] = this.state.textBox[i + 1];
+    };
+    this.state.textBox.splice(this.state.textBox.length - 1, 1);
+
+    this.setState({
+      textBox: this.state.textBox
+    });
+  }
+
+  handleChangeText = (text, index) => {
+    const newText = {
+      label: "Question " + (index + 1), 
+      placeholder: "Stop!!!!!!!!!!", 
+      text: this.state.text,
+    };
+    this.state.textBox[index] = newText;
+
+    this.setState({
+      textBox: this.state.textBox
+    });
+  }
+
+  handleChangeToJSON = () => {
+    const boardFront = '\
+      {\
+       "pages": [\
+        {\
+         "name": "page1",\
+         "elements": [\
+    ';
+    const boardBack = '\
+         ]\
+        }\
+       ]\
+      }\
+    ';
+    const commentBox = '\
+      {\
+       "type": "comment",\
+       "name": "name",\
+       "value": "value"\
+      }\
+    ';
+    const checkBox = '\
+      {\
+       "type": "checkbox",\
+       "name": "question3",\
+       "choices": [\
+        "item1",\
+        "item2",\
+        "item3"\
+       ]\
+      }\
+    ';
+    var newText = '';
+
+    for(let ind = 0; ind < this.state.textBox.length; ind++){
+      newText += '\
+        {\
+         "type": "comment",\
+         "name": "' + this.state.textBox[ind].label + '",\
+         "title": "' + this.state.textBox[ind].label + '",\
+         "description": "' + this.state.textBox[ind].text + '"\
+        }\
+      ';
+      if(ind !== this.state.textBox.length - 1){
+        newText += ',';
+      }
+    }
+    const tempText = boardFront + commentBox + ',\n' + checkBox + boardBack;
+    this.state.Jtext = boardFront + newText + boardBack;;
+    this.setState({
+      Jtext: this.state.Jtext
+    });
+    json = this.state.Jtext;
+  }
+
+  render() {
+    return (
+      <div className="component-wrapper">
+        <button onClick={this.handleAddText} className="addTextButton">
+          addText
+        </button>
+        <ul>
+          {this.state.textBox.map(
+            (text, index) => {
+              return(<li key = {index}>
+                <TextField 
+                  id="filled-secondary"
+                  label={this.state.textBox[index].label}
+                  placeholder={this.state.textBox[index].placeholder}
+                  value={this.state.textBox[index].text}
+                  defaultValue={this.props.defaultValue}
+                  multiline
+                  fullWidth
+                  rows="8"
+                  onChange={this.TextBoxChange.bind(this, index)}
+                  margin="normal"
+                  variant="outlined">
+                </TextField> 
+                <button onClick={() => this.handleChangeText(text, index)} className="changeButton">
+                  modify
+                </button>
+                <button onClick={() => this.handleDeleteText(text, index)} className="deleteButton">
+                  delete
+                </button>
+              </li>)
+            }
+          )}
+        </ul> 
+        <ul>
+          <button onClick={this.handleChangeToJSON} className="JSONButton">
+            Text to JSON
+          </button>
+        </ul>
+      </div>
+
+    );
+  };
+}
+
+
 const INITIAL_STATE = {
   title: "",
   type: "",
@@ -47,7 +226,6 @@ const INITIAL_STATE = {
   fileArray: [],
   uploading: false,
   email: "",
-  writing: "",
 };
 
 class UploadNewDialog extends React.Component {
@@ -99,12 +277,20 @@ class UploadNewDialog extends React.Component {
   handleUpload = (e) => {
     console.log(this.state);
 
-    const isInvalid =
+    const isInvalid1 =
       this.state.title === '' ||
       this.state.description === '';
-    
-    if(isInvalid) {
+
+    const isInvalid2 = 
+      json === '';
+
+    if(isInvalid1) {
       alert("모든 필드에 정보를 입력해 주세요");
+      return;
+    }
+
+    if(isInvalid2) {
+      alert("Text to JSON 버튼을 클릭해 주세요");
       return;
     }
 
@@ -112,8 +298,8 @@ class UploadNewDialog extends React.Component {
 
     let userRef = this.props.firebase.user(this.state.authUser.uid);
     let workRef = this.props.firebase.db.collection('works');
-    let storageRef = this.props.firebase.storage.ref();
-    let treeRef = this.props.firebase.db.collection('trees');
+    // let storageRef = this.props.firebase.storage.ref();
+    // let treeRef = this.props.firebase.db.collection('trees');
 
     if(this.state.type === "Writing") {
       // Writing
@@ -135,7 +321,9 @@ class UploadNewDialog extends React.Component {
           owner: this.state.authUser.uid,
           ownerName: this.state.email,
           date: (new Date()).getTime(),
-          files: [this.state.writing],
+          files: [json],
+          answeredUsers: [],
+          answers: [],
         })
         .then(()=>{
           console.log('Work add success!');
@@ -144,21 +332,8 @@ class UploadNewDialog extends React.Component {
           })
           .then(()=>{
             console.log('User collection update success!');
-
-            treeRef.add({
-              id: docRef.id,
-              branch: 'master',
-              children: []
-            })
-            .then(() => {
-              console.log("Tree collection add success!");
-              this.handleClose();
-              window.location.reload();
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-
+            this.handleClose();
+            window.location.reload();
           })
           .catch((error)=>{
             console.log(error);
@@ -245,22 +420,12 @@ class UploadNewDialog extends React.Component {
               </Grid>
             </div>
 
-            <Divider className={classes.divider}/>
+            <Grid container>
+              <Grid item xs={11}>
+                <AddSurvey />
+              </Grid>
+            </Grid>
 
-            {/* {this.state.type === "Writing" ? */}
-              <TextField
-              name="poll_json"
-              id="textfield-literature"
-              label="POLL"
-              placeholder="Please Copy&Paste JSON string of a poll"
-              multiline
-              fullWidth
-              rows="8"
-              onChange={this.handleChange}
-              className={classes.writing}
-              margin="normal"
-              variant="outlined"
-            /> 
             {/* :
               <UploadDropzone onNewFile={this.handleNewFile}/>
             } */}
@@ -306,5 +471,10 @@ UploadNewDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func,
 };
+
+ReactDOM.render(
+  <AddSurvey />,
+  document.getElementById('root')
+);
 
 export default withFirebase(withStyles(uploadDialogStyle)(UploadNewDialog));

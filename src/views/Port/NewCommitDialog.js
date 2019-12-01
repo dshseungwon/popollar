@@ -164,7 +164,6 @@ class NewCommitDialog extends React.Component {
               branch: this.state.branchName,
               children: []
             })
-            
             .then(() => {
               console.log("Tree collection add success!");
 

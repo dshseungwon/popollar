@@ -66,6 +66,9 @@ class UploadButton extends Component {
             onClick={this.handleClickOpen}
         >
           <CloudUpload className={classes.icons} />
+          <Hidden mdUp implementation="css">
+            <p className={classes.linkText}>Upload</p>
+          </Hidden>
         </Button>
         <SignInDialog
           open={(this.state.authUser === null) && this.state.open}
