@@ -175,7 +175,7 @@ class AddSurvey extends React.Component {
     return (
       <div className="component-wrapper">
         <button onClick={this.handleAddText} className="addTextButton">
-          addText
+          add
         </button>
         <ul>
           {this.state.textBox.map(
@@ -206,7 +206,7 @@ class AddSurvey extends React.Component {
         </ul> 
         <ul>
           <button onClick={this.handleChangeToJSON} className="JSONButton">
-            Text to JSON
+            Save
           </button>
         </ul>
       </div>
