@@ -17,7 +17,7 @@ import dashboardRoutes from "routes/dashboard.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
 import image from "assets/img/sidebar.jpg";
-import logo from "assets/img/sidebar_logo.png";
+import logo from "assets/img/popollar_logo.png";
 
 const switchRoutes = (
   <Switch>
@@ -71,7 +71,7 @@ class App extends React.Component {
       <div className={classes.wrapper}>
         <Sidebar
           routes={dashboardRoutes}
-          logoText={"Popollar"}
+          // logoText={"Popollar"}
           logo={logo}
           image={image}
           handleDrawerToggle={this.handleDrawerToggle}

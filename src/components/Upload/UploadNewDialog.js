@@ -296,10 +296,7 @@ class UploadNewDialog extends React.Component {
 
     let userRef = this.props.firebase.user(this.state.authUser.uid);
     let workRef = this.props.firebase.db.collection('works');
-    // let storageRef = this.props.firebase.storage.ref();
-    // let treeRef = this.props.firebase.db.collection('trees');
-
-      // Writing
+  
       workRef.add({})
       .then((docRef) => {
         docRef.set({
@@ -395,26 +392,6 @@ class UploadNewDialog extends React.Component {
             </div>
 
             <Divider/>
-
-            {/* <div>
-              <Typography gutterBottom variant="caption" className={classes.typeSelect}>
-                Select type
-              </Typography>
-
-              <Grid container>
-                <Grid item xs={12} sm={3}>
-                  <Chip avatar={<Avatar><WritingIcon /></Avatar>}
-                    variant={(this.state.type === "AddSurvey") ? "default" : "outlined"}
-                    color="primary"
-                    className={classes.type}
-                    label="Add Survey"
-                    onClick={()=>this.setState({type: "AddSurvey"})}/>
-                </Grid>
-                <Grid item xs={4}>
-                  <AddSurvey />
-                </Grid>
-              </Grid>
-            </div> */}
 
             <Grid container>
               <Grid item xs={11}>
