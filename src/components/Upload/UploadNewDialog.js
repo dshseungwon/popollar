@@ -38,8 +38,6 @@ import { withFirebase } from "../Firebase";
 import { DialogContent, Divider } from '@material-ui/core';
 import { rejects } from 'assert';
 
-import AddSurvey from "./AddSurvey";
-
 var json = '';
 
 class AddSurvey extends React.Component {
