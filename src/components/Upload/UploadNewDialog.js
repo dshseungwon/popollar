@@ -39,7 +39,7 @@ class AddSurvey extends React.Component {
 
     this.state = {
       textBox: [
-        {label: "Question 1", placeholder: "Stop!!!!!!!!!!", text: "Hello"},
+        {label: "Question 1", placeholder: "Content", text: "Hello"},
       ],
       text: '',
       Jtext: '',
@@ -75,7 +75,7 @@ class AddSurvey extends React.Component {
   handleAddText = () => {
     const newText = {
       label: "Question " + (this.state.textBox.length + 1), 
-      placeholder: "Stop!!!!!!!!!!", 
+      placeholder: "Content", 
       text: this.state.text,
     };
 
@@ -98,7 +98,7 @@ class AddSurvey extends React.Component {
   handleChangeText = (text, index) => {
     const newText = {
       label: "Question " + (index + 1), 
-      placeholder: "Stop!!!!!!!!!!", 
+      placeholder: "Content", 
       text: this.state.text,
     };
     this.state.textBox[index] = newText;

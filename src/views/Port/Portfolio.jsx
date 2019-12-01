@@ -47,7 +47,7 @@ class Portfolio extends React.Component {
                   let tempdata = doc.data();
                   tempdata.id = doc.id;
                   workArray.push(tempdata);
-                  console.log(doc.id, " => ", tempdata);
+                  // console.log(doc.id, " => ", tempdata);
                 });
                 this.setState({ loading: false });
               }.bind(this)

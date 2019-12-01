@@ -2,6 +2,9 @@ import React from 'react';
 
 import Typography from '@material-ui/core/Typography';
 
+import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
+
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -28,6 +31,9 @@ import newCommitDialogStyle from "assets/jss/material-dashboard-react/components
 
 import { withFirebase } from "../../components/Firebase";
 import { DialogContent, Divider } from '@material-ui/core';
+import ResponseItem from './ResponseItem';
+
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const INITIAL_STATE = {
   name: "",
@@ -79,37 +85,26 @@ class ResultDialog extends React.Component {
       }
     );
 
-
-    console.log(this.props.data);
-
     this.setState({
       ...this.props.data,
     });
-
   }
 
   componentWillUnmount() {
     this.listner();
   }
 
-
-  getWriting = () => {
-    let literature = "";
-    this.state.files.forEach((writing) => {
-      console.log(writing);
-      literature += (writing + '\n');
-    })
-    return literature;
-  }
-
-  handleNewFile = (acceptedFiles) => {
-    this.setState({
-      fileArray: acceptedFiles,
-    })
-  }
-
   render() {
-    const { classes, onClose, ...other } = this.props;
+    const { classes, onClose, data, ...other } = this.props;
+
+    const answerList = data.answers.map(response => (
+      <div key={response.id}>
+        <ResponseItem
+          answer={response}
+          key={response.id}
+        />
+      </div>
+    ));
 
     return (
       <Dialog onClose={this.handleClose} maxWidth={false} {...other}>
@@ -133,56 +128,12 @@ class ResultDialog extends React.Component {
             </div>
 
             <Divider className={classes.divider}/>
-
-              <TextField
-              name="writing"
-              id="textfield-literature"
-              label="Literature"
-              placeholder="Once upon a time..."
-              multiline
-              fullWidth
-              rows="8"
-              defaultValue={this.getWriting()}
-              onChange={this.handleChange}
-              className={classes.writing}
-              margin="normal"
-              variant="outlined"
-            />
             
-            
-            <Divider className={classes.divider}/>
-            
-            <TextField
-                name="branchName"
-                id="textfield-branchName"
-                label="Branch"
-                placeholder="Branch Name"
-                fullWidth
-                defaultValue={this.state.branchName}
-                onChange={this.handleChange}
-                className={classes.branchName}
-                margin="normal"
-                variant="outlined"
-              />
+            <AutoPlaySwipeableViews interval={5000}>
+              { answerList }
+            </AutoPlaySwipeableViews>
 
             <Divider className={classes.divider}/>
-
-            <div>
-              <TextField
-                name="description"
-                id="textfield-description"
-                label="Description"
-                placeholder="Lovely work!"
-                multiline
-                fullWidth
-                defaultValue={this.state.description}
-                onChange={this.handleChange}
-                className={classes.description}
-                margin="normal"
-                variant="outlined"
-              />
-
-            </div>
           </main>
         </DialogContent>
       </Dialog>

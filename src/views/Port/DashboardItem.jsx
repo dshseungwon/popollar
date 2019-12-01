@@ -78,6 +78,7 @@ class DashboardItem extends Component {
 
   render() {
     const { classes, visibility, info } = this.props;
+    // console.log(info);
     if (visibility == true) {
       return (
         <Fragment>
