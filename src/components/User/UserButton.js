@@ -68,9 +68,9 @@ class UserButton extends React.Component {
           onClick={this.handleClickOpen}
           >
           <Person className={classes.icons} />
-          {/* <Hidden mdUp implementation="css">
+          <Hidden mdUp implementation="css">
             <p className={classes.linkText}>Profile</p>
-          </Hidden> */}
+          </Hidden>
         </Button>
         <SignInDialog
           open={(this.state.authUser === null) && this.state.open}

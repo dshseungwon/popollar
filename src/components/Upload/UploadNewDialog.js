@@ -290,7 +290,7 @@ class UploadNewDialog extends React.Component {
     let userRef = this.props.firebase.user(this.state.authUser.uid);
     let workRef = this.props.firebase.db.collection('works');
     // let storageRef = this.props.firebase.storage.ref();
-    let treeRef = this.props.firebase.db.collection('trees');
+    // let treeRef = this.props.firebase.db.collection('trees');
 
       workRef.add({})
       .then((docRef) => {
@@ -322,21 +322,8 @@ class UploadNewDialog extends React.Component {
           })
           .then(()=>{
             console.log('User collection update success!');
-
-            treeRef.add({
-              id: docRef.id,
-              branch: 'master',
-              children: []
-            })
-            .then(() => {
-              console.log("Tree collection add success!");
-              this.handleClose();
-              window.location.reload();
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-
+            this.handleClose();
+            window.location.reload();
           })
           .catch((error)=>{
             console.log(error);

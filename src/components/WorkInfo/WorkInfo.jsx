@@ -112,8 +112,6 @@ class WorkInfo extends React.Component {
   };
 
   onComplete =(survey, options) => {
-    console.log("hello~");
-    console.log(survey.data);
 
     // upload it to DB
     if (this.state.authUser === false) {
@@ -239,7 +237,7 @@ class WorkInfo extends React.Component {
     const { classes, info } = this.props;
     let i = 0;
     let likeChip;
-    let bigContent = <div />;
+    let bigContent;
     var model = new Survey.Model(info.files[0]);
     // if (
     //   info.type === "Photo" ||
@@ -252,9 +250,8 @@ class WorkInfo extends React.Component {
     //     </div>
     //   ));
     // }
-      console.log("info.type: ", info.type);
       bigContent = (
-        <div align="left" style={{margin: "5%", color: "black"}}>
+        <div align="left" style={{margin: "2%", paddingBottom: "4%", color: "black", border: "4px dashed #bcbcbc"}}>
           <Survey.Survey model={model} formCss={this.formCss} onComplete={this.onComplete} />
         </div>
       );
@@ -316,11 +313,11 @@ class WorkInfo extends React.Component {
             <h3 align="left" className={classes.div_title}>
               {info.name}
             </h3>
+            <div className={classes.description_body}>
+                {info.description}
+            </div>
             {bigContent}
             <React.Fragment>
-              <div className={classes.description_head} style={{marginBottom: "2%"}}>
-                {info.description}
-              </div>
               {/* <div className={classes.description_body} style={{marginTop: "2%"}}>{info.description}</div> */}
             </React.Fragment>
             <Divider />

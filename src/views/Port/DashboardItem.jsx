@@ -12,7 +12,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 
 import WorkInfo from "../../components/WorkInfo/WorkInfo.jsx";
 import Divider from "@material-ui/core/Divider";
-import NewCommitDialog from "./NewCommitDialog";
+import ResultDialog from "./ResultDialog";
 import { withFirebase } from "../../components/Firebase";
 import { Button } from "@material-ui/core";
 
@@ -107,7 +107,7 @@ class DashboardItem extends Component {
 
           {
             this.state.dialogOpen ?
-            <NewCommitDialog
+            <ResultDialog
             open={this.state.dialogOpen}
             onClose={this.closeDialog}
             data={info}/> :
