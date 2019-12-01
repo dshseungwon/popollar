@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 import { withFirebase } from "../../components/Firebase";
+import reactImg from 'react-image';
 
 let itemArray = [];
 
@@ -105,7 +106,7 @@ class Marketplace extends React.Component {
         <Grid container spacing={3}>
           <Grid item>
             <ButtonBase className={classes.image}>
-            <img className={classes.img} alt="pictures" src="gs://popollar-ku.appspot.com/market.png" />
+            <img className={classes.img} alt="pictures" src="https://pmcvariety.files.wordpress.com/2019/02/netflix-logo-originals.jpg?w=640" />
             </ButtonBase>
          </Grid>
           <Grid item xs={13} sm container>

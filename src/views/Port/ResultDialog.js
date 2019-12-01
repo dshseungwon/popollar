@@ -132,10 +132,9 @@ class ResultDialog extends React.Component {
             {/* <AutoPlaySwipeableViews interval={5000}>
               { answerList }
             </AutoPlaySwipeableViews> */}
-
-            <SwipeableViews enableMouseEvents>
-              { answerList }
-            </SwipeableViews>
+              <SwipeableViews enableMouseEvents>
+                { answerList }
+              </SwipeableViews>
 
             <Divider className={classes.divider}/>
           </main>
