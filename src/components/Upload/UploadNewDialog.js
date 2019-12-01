@@ -65,7 +65,7 @@ class AddSurvey extends React.Component {
 
     this.state = {
       textBox: [
-        {label: "Question 1", placeholder: "Content", text: "Click 'Erase' to erase the question"},
+        {label: "Question 1", placeholder: "Content", text: ""},
       ],
       text: '',
       Jtext: '',
