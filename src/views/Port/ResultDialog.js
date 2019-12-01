@@ -123,6 +123,9 @@ class ResultDialog extends React.Component {
                 <div className={classes.description_body}>
                   {this.state.description}
                 </div>
+                <div className={classes.description_body}>
+                  * Swipe to check individual responses
+                </div>
                 </Grid>
               </Grid>
             </div>

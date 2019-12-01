@@ -47,7 +47,7 @@ class AddSurvey extends React.Component {
 
     this.state = {
       textBox: [
-        {label: "Question 1", placeholder: "Content", text: "Hello"},
+        {label: "Question 1", placeholder: "Content", text: "Click 'Modify' to erase the question"},
       ],
       text: '',
       Jtext: '',
@@ -299,7 +299,6 @@ class UploadNewDialog extends React.Component {
     // let storageRef = this.props.firebase.storage.ref();
     // let treeRef = this.props.firebase.db.collection('trees');
 
-    if(this.state.type === "Writing") {
       // Writing
       workRef.add({})
       .then((docRef) => {
@@ -344,7 +343,6 @@ class UploadNewDialog extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-    }   
   }
 
   handleNewFile = (acceptedFiles) => {
@@ -398,7 +396,7 @@ class UploadNewDialog extends React.Component {
 
             <Divider/>
 
-            <div>
+            {/* <div>
               <Typography gutterBottom variant="caption" className={classes.typeSelect}>
                 Select type
               </Typography>
@@ -416,7 +414,7 @@ class UploadNewDialog extends React.Component {
                   <AddSurvey />
                 </Grid>
               </Grid>
-            </div>
+            </div> */}
 
             <Grid container>
               <Grid item xs={11}>
@@ -424,11 +422,6 @@ class UploadNewDialog extends React.Component {
               </Grid>
             </Grid>
 
-            {/* :
-              <UploadDropzone onNewFile={this.handleNewFile}/>
-            } */}
-            
-            
             <Divider className={classes.divider}/>
 
             <div>
@@ -444,19 +437,7 @@ class UploadNewDialog extends React.Component {
                 margin="normal"
                 variant="outlined"
               />
-              
-              {/* <TextField
-                name="commitMessage"
-                id="textfield-commit-message"
-                label="Commit Message"
-                placeholder="First Commit"
-                multiline
-                fullWidth
-                onChange={this.handleChange}
-                className={classes.commitMessage}
-                margin="normal"
-                variant="outlined"
-              /> */}
+            
             </div>
           </main>
         </DialogContent>
