@@ -38,6 +38,23 @@ import { withFirebase } from "../Firebase";
 import { DialogContent, Divider } from '@material-ui/core';
 import { rejects } from 'assert';
 
+// blockchain part --------------------------------------------
+// import Web3 from "web3";
+
+// //if (typeof web3 !== 'undefined') {
+// //    console.log("connect to given provider");
+// //    window.web3 = new Web3(window.web3.currentProvider);
+// //    console.log(window.web3.currentProvider);
+// //} else {
+//     console.log("connect to new provider - localhost");
+//     window.web3 = new Web3();
+//     window.web3.setProvider(new window.web3.providers.HttpProvider("http://localhost:7545"));
+// //}
+// var accounts = window.web3.eth.getAccounts().then(
+//   function (data) {
+//     window.web3.eth.defaultAccount = data[0]; 
+//   });
+// -----------------------------------------------------------
 
 var json = '';
 
@@ -300,6 +317,193 @@ class UploadNewDialog extends React.Component {
   
       workRef.add({})
       .then((docRef) => {
+        // upload it to blockchain (ethereum network) ----------------
+        // var pollContract = new window.web3.eth.Contract([
+        //   {
+        //     "constant": false,
+        //     "inputs": [
+        //       {
+        //         "name": "newPoll",
+        //         "type": "string"
+        //       },
+        //       {
+        //         "name": "Poller",
+        //         "type": "string"
+        //       }
+        //     ],
+        //     "name": "addNewPoll",
+        //     "outputs": [],
+        //     "payable": false,
+        //     "type": "function",
+        //     "stateMutability": "nonpayable"
+        //   },
+        //   {
+        //     "constant": false,
+        //     "inputs": [
+        //       {
+        //         "name": "pollIndex",
+        //         "type": "uint8"
+        //       },
+        //       {
+        //         "name": "content",
+        //         "type": "string"
+        //       }
+        //     ],
+        //     "name": "answerFor",
+        //     "outputs": [],
+        //     "payable": false,
+        //     "type": "function",
+        //     "stateMutability": "nonpayable"
+        //   },
+        //   {
+        //     "constant": false,
+        //     "inputs": [
+        //       {
+        //         "name": "pollIndex",
+        //         "type": "uint8"
+        //       },
+        //       {
+        //         "name": "Poller",
+        //         "type": "string"
+        //       }
+        //     ],
+        //     "name": "cancelPoll",
+        //     "outputs": [],
+        //     "payable": false,
+        //     "type": "function",
+        //     "stateMutability": "nonpayable"
+        //   },
+        //   {
+        //     "inputs": [],
+        //     "payable": false,
+        //     "type": "constructor",
+        //     "stateMutability": "nonpayable"
+        //   },
+        //   {
+        //     "anonymous": false,
+        //     "inputs": [
+        //       {
+        //         "indexed": false,
+        //         "name": "_content",
+        //         "type": "string"
+        //       }
+        //     ],
+        //     "name": "AnswerFor",
+        //     "type": "event"
+        //   },
+        //   {
+        //     "anonymous": false,
+        //     "inputs": [
+        //       {
+        //         "indexed": false,
+        //         "name": "_content",
+        //         "type": "string"
+        //       },
+        //       {
+        //         "indexed": false,
+        //         "name": "_poller",
+        //         "type": "string"
+        //       }
+        //     ],
+        //     "name": "PollAdded",
+        //     "type": "event"
+        //   },
+        //   {
+        //     "anonymous": false,
+        //     "inputs": [
+        //       {
+        //         "indexed": false,
+        //         "name": "_content",
+        //         "type": "string"
+        //       },
+        //       {
+        //         "indexed": false,
+        //         "name": "_poller",
+        //         "type": "string"
+        //       }
+        //     ],
+        //     "name": "PollCanceled",
+        //     "type": "event"
+        //   },
+        //   {
+        //     "constant": true,
+        //     "inputs": [
+        //       {
+        //         "name": "pollIndex",
+        //         "type": "uint8"
+        //       },
+        //       {
+        //         "name": "answerIndex",
+        //         "type": "uint8"
+        //       }
+        //     ],
+        //     "name": "getAnswer",
+        //     "outputs": [
+        //       {
+        //         "name": "",
+        //         "type": "string"
+        //       }
+        //     ],
+        //     "payable": false,
+        //     "type": "function",
+        //     "stateMutability": "view"
+        //   },
+        //   {
+        //     "constant": true,
+        //     "inputs": [
+        //       {
+        //         "name": "pollIndex",
+        //         "type": "uint8"
+        //       }
+        //     ],
+        //     "name": "getPoll",
+        //     "outputs": [
+        //       {
+        //         "name": "",
+        //         "type": "string"
+        //       },
+        //       {
+        //         "name": "",
+        //         "type": "uint256"
+        //       },
+        //       {
+        //         "name": "",
+        //         "type": "string"
+        //       }
+        //     ],
+        //     "payable": false,
+        //     "type": "function",
+        //     "stateMutability": "view"
+        //   },
+        //   {
+        //     "constant": true,
+        //     "inputs": [],
+        //     "name": "getTotalPolls",
+        //     "outputs": [
+        //       {
+        //         "name": "",
+        //         "type": "uint8"
+        //       }
+        //     ],
+        //     "payable": false,
+        //     "type": "function",
+        //     "stateMutability": "view"}], 
+        //     '0x03C8f9ce368c7De2F97B5a59fB5cF5C95AA160b9');
+                    
+        // var poll_tx = pollContract.methods.addNewPoll(json, this.state.email).send({
+        //   from: window.web3.eth.defaultAccount,
+        //   gas: 3000000,
+        //   gasPrice: 0
+        // });
+        // var pollI = 0;
+        // pollContract.methods.getTotalPolls().call().then(
+        //   function (data) {
+        //     pollI = data;
+        //   }
+        // );
+        // console.log(pollI);
+        // ------------------------------------------------------------
+
         docRef.set({
           name: this.state.title,
           description: this.state.description,
@@ -319,6 +523,9 @@ class UploadNewDialog extends React.Component {
           files: [json],
           answeredUsers: [],
           answers: [],
+          // -----------------------------------------------------------
+          // pollIndex: pollI,
+          // -----------------------------------------------------------
         })
         .then(()=>{
           console.log('Work add success!');

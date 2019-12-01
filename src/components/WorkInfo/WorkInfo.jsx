@@ -12,6 +12,19 @@ import Chip from "@material-ui/core/Chip";
 
 import * as Survey from "survey-react";
 
+// blockchain parts ------------------------
+// import Web3 from "web3";
+
+// console.log("connect to new provider - localhost");
+// window.web3 = new Web3();
+// window.web3.setProvider(new window.web3.providers.HttpProvider("http://localhost:7545"));
+
+// var accounts = window.web3.eth.getAccounts().then(
+// function (data) {
+//   window.web3.eth.defaultAccount = data[0]; 
+// });
+// -----------------------------------------
+
 const styles = theme => ({
   layout: {
     width: "auto",
@@ -128,6 +141,7 @@ class WorkInfo extends React.Component {
         }
         else {
             // First answering by this user
+            console.log("start to upload the answer");
             this.setState({
               isAnswered: true
             });
@@ -136,11 +150,196 @@ class WorkInfo extends React.Component {
             const list = this.props.info.answers;
             list.push(survey.data);
             const ansRef = this.props.firebase.db.collection("works").doc(this.props.info.id);
+            console.log("uploaded into db");
+            console.log(survey.data);
+
+            var content = JSON.stringify(survey.data);
+            console.log(content);
+
+            // upload it to blockchain (ethereum network) -------------
+  //           var pollContract = new window.web3.eth.Contract([
+	// {
+	// 	"constant": false,
+	// 	"inputs": [
+	// 		{
+	// 			"name": "newPoll",
+	// 			"type": "string"
+	// 		},
+	// 		{
+	// 			"name": "Poller",
+	// 			"type": "string"
+	// 		}
+	// 	],
+	// 	"name": "addNewPoll",
+	// 	"outputs": [],
+	// 	"payable": false,
+	// 	"type": "function",
+	// 	"stateMutability": "nonpayable"
+	// },
+	// {
+	// 	"constant": false,
+	// 	"inputs": [
+	// 		{
+	// 			"name": "pollIndex",
+	// 			"type": "uint8"
+	// 		},
+	// 		{
+	// 			"name": "content",
+	// 			"type": "string"
+	// 		}
+	// 	],
+	// 	"name": "answerFor",
+	// 	"outputs": [],
+	// 	"payable": false,
+	// 	"type": "function",
+	// 	"stateMutability": "nonpayable"
+	// },
+	// {
+	// 	"constant": false,
+	// 	"inputs": [
+	// 		{
+	// 			"name": "pollIndex",
+	// 			"type": "uint8"
+	// 		},
+	// 		{
+	// 			"name": "Poller",
+	// 			"type": "string"
+	// 		}
+	// 	],
+	// 	"name": "cancelPoll",
+	// 	"outputs": [],
+	// 	"payable": false,
+	// 	"type": "function",
+	// 	"stateMutability": "nonpayable"
+	// },
+	// {
+	// 	"inputs": [],
+	// 	"payable": false,
+	// 	"type": "constructor",
+	// 	"stateMutability": "nonpayable"
+	// },
+	// {
+	// 	"anonymous": false,
+	// 	"inputs": [
+	// 		{
+	// 			"indexed": false,
+	// 			"name": "_content",
+	// 			"type": "string"
+	// 		}
+	// 	],
+	// 	"name": "AnswerFor",
+	// 	"type": "event"
+	// },
+	// {
+	// 	"anonymous": false,
+	// 	"inputs": [
+	// 		{
+	// 			"indexed": false,
+	// 			"name": "_content",
+	// 			"type": "string"
+	// 		},
+	// 		{
+	// 			"indexed": false,
+	// 			"name": "_poller",
+	// 			"type": "string"
+	// 		}
+	// 	],
+	// 	"name": "PollAdded",
+	// 	"type": "event"
+	// },
+	// {
+	// 	"anonymous": false,
+	// 	"inputs": [
+	// 		{
+	// 			"indexed": false,
+	// 			"name": "_content",
+	// 			"type": "string"
+	// 		},
+	// 		{
+	// 			"indexed": false,
+	// 			"name": "_poller",
+	// 			"type": "string"
+	// 		}
+	// 	],
+	// 	"name": "PollCanceled",
+	// 	"type": "event"
+	// },
+	// {
+	// 	"constant": true,
+	// 	"inputs": [
+	// 		{
+	// 			"name": "pollIndex",
+	// 			"type": "uint8"
+	// 		},
+	// 		{
+	// 			"name": "answerIndex",
+	// 			"type": "uint8"
+	// 		}
+	// 	],
+	// 	"name": "getAnswer",
+	// 	"outputs": [
+	// 		{
+	// 			"name": "",
+	// 			"type": "string"
+	// 		}
+	// 	],
+	// 	"payable": false,
+	// 	"type": "function",
+	// 	"stateMutability": "view"
+	// },
+	// {
+	// 	"constant": true,
+	// 	"inputs": [
+	// 		{
+	// 			"name": "pollIndex",
+	// 			"type": "uint8"
+	// 		}
+	// 	],
+	// 	"name": "getPoll",
+	// 	"outputs": [
+	// 		{
+	// 			"name": "",
+	// 			"type": "string"
+	// 		},
+	// 		{
+	// 			"name": "",
+	// 			"type": "uint256"
+	// 		},
+	// 		{
+	// 			"name": "",
+	// 			"type": "string"
+	// 		}
+	// 	],
+	// 	"payable": false,
+	// 	"type": "function",
+	// 	"stateMutability": "view"
+	// },
+	// {
+	// 	"constant": true,
+	// 	"inputs": [],
+	// 	"name": "getTotalPolls",
+	// 	"outputs": [
+	// 		{
+	// 			"name": "",
+	// 			"type": "uint8"
+	// 		}
+	// 	],
+	// 	"payable": false,
+	// 	"type": "function",
+  //   "stateMutability": "view"}], 
+  //   '0x03C8f9ce368c7De2F97B5a59fB5cF5C95AA160b9');
+            
+  //           var answer_tx = pollContract.methods.answerFor(this.props.info.pollIndex, content).send({
+  //             from: window.web3.eth.defaultAccount,
+  //             gas: 3000000,
+  //             gasPrice: 0
+  //           });
+  //           console.log("uploaded into blockchain");
+            // --------------------------------------------------------
             return ansRef.update({
               answers: list,
               answeredUsers: ansUser
             });
-            console.log("uploaded into db");
         }
     }
   };
