@@ -2,6 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Input from '@material-ui/core/Input';
+import Paper from '@material-ui/core/Paper';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -19,7 +24,9 @@ import Avatar from '@material-ui/core/Avatar';
 import TitleIcon from '@material-ui/icons/BubbleChart';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import WritingIcon from '@material-ui/icons/Create';
+import DrawingIcon from '@material-ui/icons/Brush';
 import PhotoIcon from '@material-ui/icons/PhotoCamera';
+import DesignIcon from '@material-ui/icons/Layers';
 import MusicIcon from '@material-ui/icons/MusicNote';
 import AttachIcon from '@material-ui/icons/AttachFile';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -29,6 +36,9 @@ import UploadDropzone from "./UploadDropzone";
 
 import { withFirebase } from "../Firebase";
 import { DialogContent, Divider } from '@material-ui/core';
+import { rejects } from 'assert';
+
+import AddSurvey from "./AddSurvey";
 
 var json = '';
 
@@ -269,7 +279,6 @@ class UploadNewDialog extends React.Component {
 
     const isInvalid1 =
       this.state.title === '' ||
-      this.state.type === '' ||
       this.state.description === '';
 
     const isInvalid2 = 
@@ -292,9 +301,10 @@ class UploadNewDialog extends React.Component {
     // let storageRef = this.props.firebase.storage.ref();
     // let treeRef = this.props.firebase.db.collection('trees');
 
+    if(this.state.type === "Writing") {
+      // Writing
       workRef.add({})
       .then((docRef) => {
-        console.log('WordRef added');
         docRef.set({
           name: this.state.title,
           description: this.state.description,
@@ -336,6 +346,7 @@ class UploadNewDialog extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+    }   
   }
 
   handleNewFile = (acceptedFiles) => {
@@ -372,14 +383,14 @@ class UploadNewDialog extends React.Component {
                 />
                 </Grid>
                 <Grid item xs={4}>
-                <Button
+                <Button 
                   variant="contained"
                   color="secondary"
                   className={classes.uploadButton}
                   onClick={this.handleUpload}
                   >
                   Upload
-                  {this.state.uploading ?
+                  {this.state.uploading ? 
                     <CircularProgress size={24} className={classes.progress} /> :
                     <CloudUploadIcon className={classes.uploadButtonIcon} />}
                 </Button>
@@ -397,40 +408,15 @@ class UploadNewDialog extends React.Component {
               <Grid container>
                 <Grid item xs={12} sm={3}>
                   <Chip avatar={<Avatar><WritingIcon /></Avatar>}
-                    variant={(this.state.type === "Study") ? "default" : "outlined"}
+                    variant={(this.state.type === "AddSurvey") ? "default" : "outlined"}
                     color="primary"
                     className={classes.type}
-                    label="Study"
-                    onClick={()=>this.setState({type: "Study"})}/>
+                    label="Add Survey"
+                    onClick={()=>this.setState({type: "AddSurvey"})}/>
                 </Grid>
-                <Grid item xs={12} sm={3}>
-                  <Chip
-                    avatar={<Avatar><MusicIcon /></Avatar>}
-                    variant={(this.state.type === "Event") ? "default" : "outlined"}
-                    color="primary"
-                    className={classes.type}
-                    label="Event"
-                    onClick={()=>this.setState({type: "Event"})}/>
+                <Grid item xs={4}>
+                  <AddSurvey />
                 </Grid>
-                <Grid item xs={12} sm={3}>
-                  <Chip
-                    avatar={<Avatar><PhotoIcon /></Avatar>}
-                    variant={(this.state.type === "Research") ? "default" : "outlined"}
-                    color="primary"
-                    className={classes.type}
-                    label="Research"
-                    onClick={()=>this.setState({type: "Research"})}/>
-                </Grid>
-                <Grid item xs={12} sm={3}>
-                  <Chip
-                    avatar={<Avatar><AttachIcon /></Avatar>}
-                    variant={(this.state.type === "Etc") ? "default" : "outlined"}
-                    color="primary"
-                    className={classes.type}
-                    label="Etc"
-                    onClick={()=>this.setState({type: "Etc"})}/>
-                </Grid>
-
               </Grid>
             </div>
 
@@ -443,8 +429,8 @@ class UploadNewDialog extends React.Component {
             {/* :
               <UploadDropzone onNewFile={this.handleNewFile}/>
             } */}
-
-
+            
+            
             <Divider className={classes.divider}/>
 
             <div>
@@ -460,6 +446,19 @@ class UploadNewDialog extends React.Component {
                 margin="normal"
                 variant="outlined"
               />
+              
+              {/* <TextField
+                name="commitMessage"
+                id="textfield-commit-message"
+                label="Commit Message"
+                placeholder="First Commit"
+                multiline
+                fullWidth
+                onChange={this.handleChange}
+                className={classes.commitMessage}
+                margin="normal"
+                variant="outlined"
+              /> */}
             </div>
           </main>
         </DialogContent>
