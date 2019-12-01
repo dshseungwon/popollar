@@ -195,20 +195,20 @@ class AddSurvey extends React.Component {
                   margin="normal"
                   variant="outlined">
                 </TextField> 
-                <button onClick={() => this.handleChangeText(text, index)} className="changeButton">
+                <Button onClick={() => this.handleChangeText(text, index)} className="changeButton" color='rgba(0,0,0,0.2)'>
                   Erase
-                </button>
-                <button onClick={() => this.handleDeleteText(text, index)} className="deleteButton">
+                </Button>
+                <Button onClick={() => this.handleDeleteText(text, index)} className="deleteButton" color='rgba(0,0,0,0.2)'>
                   Delete
-                </button>
+                </Button>
               </li>)
             }
           )}
         </ul> 
         <ul>
-          <button onClick={this.handleChangeToJSON} className="JSONButton">
+          <Button onClick={this.handleChangeToJSON} className="JSONButton" color='rgba(0,50,0,0.2)'>
             Save
-          </button>
+          </Button>
         </ul>
       </div>
 
