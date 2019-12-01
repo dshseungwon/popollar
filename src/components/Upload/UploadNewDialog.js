@@ -38,6 +38,7 @@ import { withFirebase } from "../Firebase";
 import { DialogContent, Divider } from '@material-ui/core';
 import { rejects } from 'assert';
 
+
 var json = '';
 
 class AddSurvey extends React.Component {
@@ -47,7 +48,7 @@ class AddSurvey extends React.Component {
 
     this.state = {
       textBox: [
-        {label: "Question 1", placeholder: "Content", text: "Click 'Modify' to erase the question"},
+        {label: "Question 1", placeholder: "Content", text: "Click 'Erase' to erase the question"},
       ],
       text: '',
       Jtext: '',
@@ -174,9 +175,9 @@ class AddSurvey extends React.Component {
   render() {
     return (
       <div className="component-wrapper">
-        <button onClick={this.handleAddText} className="addTextButton">
-          add
-        </button>
+        <Button onClick={this.handleAddText} className="addTextButton" color='rgba(0,0,0,0.2)'>
+          Add
+        </Button>
         <ul>
           {this.state.textBox.map(
             (text, index) => {
@@ -195,10 +196,10 @@ class AddSurvey extends React.Component {
                   variant="outlined">
                 </TextField> 
                 <button onClick={() => this.handleChangeText(text, index)} className="changeButton">
-                  modify
+                  Erase
                 </button>
                 <button onClick={() => this.handleDeleteText(text, index)} className="deleteButton">
-                  delete
+                  Delete
                 </button>
               </li>)
             }
